@@ -1,0 +1,166 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- efulrental.penyewa tree view -->
+    <record id="efulrental_penyewa_view_tree" model="ir.ui.view">
+        <field name="name">Rental</field>
+        <field name="model">efulrental.penyewa</field>
+        <field name="arch" type="xml">
+            <tree>
+                <header>
+                    <button name="action_draft" string="Jadikan Draft" type="object"/>
+                </header>
+                <header>
+                    <button name="submit_action" string="Submit Penyewa" type="object"/>
+                </header>
+                <!-- Add your fields here -->
+                <field name="name"/>
+                <field name="email"/>
+                <field name="notelp"/>
+                <field name="kota"/>
+                <field name="alamatlengkap"/>
+                <field name="status" decoration-success="status == 'submitted'" decoration-danger="status == 'draft'" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- efulrental.penyewa form view -->
+    <record id="efulrental_penyewa_view_form" model="ir.ui.view">
+        <field name="name">efulrental.penyewa.view.form</field>
+        <field name="model">efulrental.penyewa</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                            <field name="name" string="Nama Lengkap" placeholder="Masukan Nama Kamu disini"/>
+                            <field name="umur" string="Umur"/>
+                            <field name="notelp" string="Nomor Handphone/Whatsapp" placeholder="Masukkan Nomor HP mu disini"/>
+                            <field name="email" string="Email" placeholder="abc@gmail.com"/>
+                    </group>
+                    <group>
+                            <field name="kota" string="Kota" placeholder="Pilih Kota yang akan Kamu Sewa Mobil"/>
+                            <field name="alamatlengkap" string="Alamat Lengkap" placeholder="Masukkan Alamat Lengkap"/>
+                            <field name="sim" string="Upload SIM"/>
+                    </group>
+                    <group>
+                            <field name="foto" widget="image"/>
+                    </group>
+                    <footer>
+                            <button type="action" string="Check All Bookings" name="%(action_efulrental_booking_info)d" domain="[('nama_penyewa','=',active_id)]"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="efulrental_penyewa_search_view" model="ir.ui.view">
+        <field name="name">Car rental search View</field>
+        <field name="model">efulrental.penyewa</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="email"/>
+                <group string="Group By">
+                    <filter name="name" string="Nama Penyewa" context="{'group_by':'name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="efulrental_penyewa_graph_view" model="ir.ui.view">
+        <field name="name">car rental graph view</field>
+        <field name="model">efulrental.penyewa</field>
+        <field name="arch" type="xml">
+            <graph string="Kota Terbanyak">
+                <field name="kota" type="col"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="efulrental_penyewa_kanban_view" model="ir.ui.view">
+        <field name="name">car rental kanban View</field>
+        <field name="model">efulrental.penyewa</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="foto"/>
+                <field name="id" attrs="{'invisible': True}"/>
+                <field name="notelp"/>
+                <field name="email"/>
+                <field name="kota"/>
+                <field name="alamatlengkap"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                          <div>
+                              <img alt="'Avatar"
+                                   t-att-src="kanban_image('efulrental.penyewa','foto',record.id.raw_value)" widht="70" height="70"/>
+                          </div>
+                            <div class="oe_kanban_details d-flex flex-column">
+                                <strong>
+                                    <field name="name"/>
+                                </strong>
+                                <ul>
+                                    <li>email:-
+                                        <field name="email"/>
+                                    </li>
+                                    <li>Umur:-
+                                        <field name="umur"/>
+                                    </li>
+                                    <li>Kota:-
+                                        <field name="kota"/>
+                                    </li>
+                                    <li>Nomor Telepon:-
+                                        <field name="notelp"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    
+    <record id="action_marking_submit" model="ir.actions.server">
+        <field name="name">Mark as submitted</field>
+        <field name="model_id" ref="model_efulrental_penyewa"/>
+        <field name="binding_model_id" ref="model_efulrental_penyewa"/>
+        <field name="binding_view_types">form,list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_submit()</field>
+    </record>
+
+    <record id="action_marking_draft" model="ir.actions.server">
+        <field name="name">Mark as draft</field>
+        <field name="model_id" ref="model_efulrental_penyewa"/>
+        <field name="binding_model_id" ref="model_efulrental_penyewa"/>
+        <field name="binding_view_types">form,list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_draft()</field>
+    </record>
+    <!-- model.name action window -->
+    <record id="efulrental_penyewa_action" model="ir.actions.act_window">
+        <field name="name">Informasi Penyewa</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">efulrental.penyewa</field>
+        <field name="view_mode">tree,form,kanban,graph</field>
+    </record>
+
+    <record id="action_getting_penyewa_booking" model="ir.actions.act_window">
+        <field name="name">Penyewa Booking</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">efulrental.booking</field>
+        <field name="domain">[('nama_penyewa', '=', active_ids)]</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="efulrental_booking_tree_view"/>
+        <field name="binding_model_id" ref="model_efulrental_penyewa"/>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Book your first car !
+          </p>
+        </field>
+    </record>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="inforental_menu_act" name="Informasi Penyewa" parent="informasi_menu_categ" action="efulrental_penyewa_action" sequence="15"/>
+</odoo>

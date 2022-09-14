@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- This Menu Item will appear in the Upper bar, that's why It needs NO parent or action -->
+    <menuitem id="rental_menu_root" name="Eful Rental Mobil" sequence="10"/>
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="informasi_menu_categ" name="Person" parent="rental_menu_root" sequence="20"/>
+    <!-- This Menu Item Must have a parent -->
+    <menuitem id="booking_menu_categ" name="Booking" parent="rental_menu_root" sequence="25"/>
+    <!-- This Menu Item Must have a parent -->
+    <menuitem id="mediapartner_menu_categ" name="Promotion" parent="rental_menu_root" sequence="40"/>
+</odoo>

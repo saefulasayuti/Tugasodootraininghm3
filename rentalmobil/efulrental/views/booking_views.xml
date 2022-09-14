@@ -1,0 +1,103 @@
+<odoo>
+    <record id="efulrental_booking_tree_view" model="ir.ui.view">
+        <field name="name">Booking Sewa Mobil Tree View</field>
+        <field name="model">efulrental.booking</field>
+        <field name="arch" type="xml">
+            <tree>
+                    <field name="nama_penyewa"/>
+                    <field name="email_penyewa"/>
+                    <field name="notelp_penyewa"/>
+                    <field name="kota_penyewa"/>
+                    <field name="driver_req"/>
+                    <field name="ride_start_dt"/>
+                    <field name="checkout_time_slots"/>
+                    <field name="ride_end_date"/>
+                    <field name="car1"/>
+                    <field name="total_cost"/>
+                    <field name="book_status" decoration-success="book_status == 'submitted'" decoration-info="book_status == 'draft'" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="efulrental_booking_form_view" model="ir.ui.view">
+        <field name="name">Booking Sewa Mobil Form View</field>
+        <field name="model">efulrental.booking</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <header>
+                        <button name="submit_action" string="Submit" type="object"
+                                class="oe_highlight" attrs="{'invisible':[('book_status','in',['submitted','cancel'])]}"/>
+                        <button name="action_cancel" string="Cancel" type="object"
+                                class="oe_highlight" attrs="{'invisible':[('book_status','in',['submitted','cancel'])]}"/>
+                        <button name="action_draft" string="Add to drft" type="object"
+                                class="oe_highlight" attrs="{'invisible':[('book_status','in',['draft'])]}"/>
+                        <field name="book_status" widget="statusbar"/>
+                    </header>
+                    <group>
+                        <group>
+                            <field name="nama_penyewa"/>
+                            <field name="umur_penyewa"/>
+                            <field name="email_penyewa"/>
+                            <field name="notelp_penyewa"/>
+                            <field name="alamatlengkap_penyewa"/>
+                            <field name="kota_penyewa"/>
+                            <field name="driver_req"/>
+                            <field name="checkout_time_slots"/>
+                        </group>
+                        <group>
+                            <field name="ride_start_dt"/>
+                            <field name="ride_end_date"/>
+                            <field name="car1"/>
+                            <field name="days_interval" force_save="1"/>
+                            <field name="cost_per_day1" />
+                            <field name="total_cost" force_save="1"/>
+                            <field name="ride_booked"/>
+                        </group>
+                    </group>
+                    <button name="%(action_efulrental_pengambilan_info)d" type="action" class="oe_highlight" string="Pengambilan"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="efulrental_booking_calendar_view" model="ir.ui.view">
+        <field name="name">book ride calendar view</field>
+        <field name="model">efulrental.booking</field>
+        <field name="arch" type="xml">
+            <calendar date_start="ride_start_dt">
+                <field name="nama_penyewa"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="car_booking_search_view" model="ir.ui.view">
+        <field name="name">Car booking search View</field>
+        <field name="model">efulrental.booking</field>
+        <field name="arch" type="xml">
+            <search>
+<!--                <field name="nama_penyewa"/>-->
+                <group expand="1" string="Group By">
+                    <filter name="nama_penyewa" string="Penyewa" context="{'group_by': 'nama_penyewa'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_efulrental_booking_info" model="ir.actions.act_window">
+        <field name="name">Booking Sewa Mobil</field>
+        <field name="res_model">efulrental.booking</field>
+        <field name="view_mode">tree,form,calendar</field>
+<!--        <field name="domain">[('id','=',active_id)]</field>-->
+<!--        <field name="help" type="html">-->
+<!--          <p class="o_view_nocontent_smiling_face">-->
+<!--            Create your First Appointment !-->
+<!--          </p>-->
+<!--        </field>-->
+        <field name="context">{'search_default_nama_penyewa': 1}</field>
+    </record>
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="booking_menu_act" name="Info Booking Sewa Mobil" parent="booking_menu_categ" action="action_efulrental_booking_info" sequence="26"/>
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="create_booking_menu_act" name="Buat Booking" parent="booking_menu_categ" action="action_efulrental_bookingwizard_info" sequence="27"/>
+</odoo>

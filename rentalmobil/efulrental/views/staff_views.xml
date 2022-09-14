@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+        <record id="efulrental_staff_tree_view" model="ir.ui.view">
+        <field name="name">Staff Data Tree View</field>
+        <field name="model">efulrental.staff</field>
+        <field name="arch" type="xml">
+            <tree>
+                    <field name="name"/>
+                    <field name="notelp"/>
+                    <field name="email"/>
+                    <field name="kota"/>
+                    <field name="role"/>
+                    <field name="status" decoration-success="status == 'approved'" decoration-danger="status == 'draft'" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="staff_form_view" model="ir.ui.view">
+        <field name="name">Staff Data Form View</field>
+        <field name="model">efulrental.staff</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <header>
+                        <button name="submit_action" string="Submit" type="object"
+                                class="oe_highlight" attrs="{'invisible':[('status','in',['submitted','cancel','draft'])]}"/>
+                        <button name="action_cancel" string="Cancel" type="object"
+                                class="oe_highlight" attrs="{'invisible':[('status','in',['submitted','cancel'])]}"/>
+                        <button name="action_draft" string="Add to drft" type="object"
+                                class="oe_highlight" attrs="{'invisible':[('status','in',['submitted','draft'])]}"/>
+                        <field name="status" widget="statusbar"/>
+                    </header>
+                    <group>
+                        <group>
+                            <field name="name" string="Name" placeholder="Masukkan Nama Lengkap"/>
+                            <field name="umur" string="Umur"/>
+                            <field name="notelp" string="Nomor Telpon" placeholder="Masukkan Nomor HP"/>
+                            <field name="email" string="Email" placeholder="ex : abc@gmail.com"/>
+                        </group>
+                        <group>
+                            <field name="kota" string="City" placeholder="Pilih Kota"/>
+                            <field name="role" string="Role" placeholder="pilih Role"/>
+                            <field name="sim" string="Upload SIM"/>
+                        </group>
+                        <group>
+                            <field name="foto2" widget="image"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="efulrental_staff_graph_view" model="ir.ui.view">
+        <field name="name">staff data graph view</field>
+        <field name="model">efulrental.staff</field>
+        <field name="arch" type="xml">
+            <graph string="Ketersediaan Staff Antar Kota">
+                <field name="kota" type="col"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="efulrental_staff_kanban_view" model="ir.ui.view">
+        <field name="name">staff data kanban View</field>
+        <field name="model">efulrental.staff</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="foto2"/>
+                <field name="id" attrs="{'invisible': True}"/>
+                <field name="notelp"/>
+                <field name="email"/>
+                <field name="kota"/>
+                <field name="role"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                          <div>
+                              <img alt="Avatar"
+                                   t-att-src="kanban_image('efulrental.staff','foto2', record.id.raw_value)" widht="70" height="70"/>
+                          </div>
+                            <div class="oe_kanban_details d-flex flex-column">
+                                <strong>
+                                    <field name="name"/>
+                                </strong>
+                                <ul>
+                                    <li>role:-
+                                        <field name="role"/>
+                                    </li>
+                                    <li>Umur:-
+                                        <field name="umur"/>
+                                    </li>
+                                    <li>Kota:-
+                                        <field name="kota"/>
+                                    </li>
+                                    <li>Nomor Telepon:-
+                                        <field name="notelp"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_efulrental_staff_info" model="ir.actions.act_window">
+        <field name="name">Informasi Staff</field>
+        <field name="res_model">efulrental.staff</field>
+        <field name="view_mode">tree,form,kanban,graph</field>
+    </record>
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="inforental_staff_act" name="Informasi Staff" parent="informasi_menu_categ" action="action_efulrental_staff_info" sequence="15"/>
+</odoo>

@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="efulrental_stokmobil_tree_view" model="ir.ui.view">
+        <field name="name">Stok Mobil Tree View</field>
+        <field name="model">efulrental.stokmobil</field>
+        <field name="arch" type="xml">
+            <tree>
+                <header>
+                    <button name="%(action_efulrental_bookingwizard_info)d" type="action" class="oe_highlight" string="Booking Mobil"/>
+                </header>
+                <field name="nama_mobil"/>
+                <field name="brand"/>
+                <field name="tipe_mobil"/>
+                <field name="kursi"/>
+                <field name="harga_sewa"/>
+                <field name="car_status" decoration-success="car_status == 'dalam_garasi'" decoration-danger="car_status != 'dalam_garasi'" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+    <record id="efulrental_stokmobil_form_view" model="ir.ui.view">
+        <field name="name">Stok Mobil Form View</field>
+        <field name="model">efulrental.stokmobil</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_car_bookings" type="object" class="oe_stat_button" icon="fa-calendar">
+                            <div class="o_stat_info">
+                                <field name="car_booking_count" class="o_stat_value"/>
+                                <span class="o_stat_text">Booking Mobil</span>
+                            </div>
+                        </button>
+                    </div>
+                    <header>
+                        <button name="dalam_garasi_action" string="Dalam Garasi" type="object"
+                                class="oe_highlight" attrs="{'invisible':[('car_status','in',['dalam_garasi'])]}"/>
+                        <button name="disewa_action" string="Disewa" type="object"
+                                class="oe_highlight"/>
+                        <button name="dalam_perbaikan_action" string="Dalam Perbaikan" type="object"
+                                class="oe_highlight"/>
+                        <button name="action_tidak_tersedia" string="Tidak Tersedia" type="object"
+                                class="oe_highlight"/>
+                        <field name="car_status" widget="statusbar"/>
+                    </header>
+                    <group>
+                        <group>
+                            <field name="tipe_mobil" string="Tipe Mobil" placeholder="Pilih Tipe Mobil"/>
+                            <field name="brand" string="Brand" placeholder="Pilih Brand Mobil"/>
+                            <field name="nama_mobil" string="Car model" placeholder="Masukkan Nama Mobil"/>
+                            <field name="kursi" string="Seats" placeholder="Kursi Mobil"/>
+                            <field name="harga_sewa" placeholder="Masukkan harga sewa perhari"/>
+                        </group>
+                        <group>
+                            <field name="foto3" widget="image"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="efulrental_stokmobil_kanban_view" model="ir.ui.view">
+        <field name="name">Stok Mobil kanban View</field>
+        <field name="model">efulrental.stokmobil</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="nama_mobil"/>
+                <field name="foto3"/>
+                <field name="brand"/>
+                <field name="id"/>
+                <field name="kursi"/>
+                <field name="tipe_mobil"/>
+                <field name="harga_sewa"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                          <div>
+                              <img alt="Avatar"
+                                   t-att-src="kanban_image('efulrental.stokmobil','foto3',record.id.raw_value)" widht="70" height="70"/>
+                          </div>
+                            <div class="oe_kanban_details d-flex flex-column">
+                                <strong>
+                                    <field name="nama_mobil"/>
+                                </strong>
+                                <ul>
+                                    <li>Brand:-
+                                        <field name="brand"/>
+                                    </li>
+                                    <li>Tipe Mobil:-
+                                        <field name="tipe_mobil"/>
+                                    </li>
+                                    <li>Kursi:-
+                                        <field name="kursi"/>
+                                    </li>
+                                    <li>Price/day:-
+                                        <field name="harga_sewa"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_efulrental_stokmobil_info" model="ir.actions.act_window">
+        <field name="name">Informasi Stok Mobil</field>
+        <field name="res_model">efulrental.stokmobil</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="stokmobil_menu_act" name="Informasi Stok Mobil" parent="rental_menu_root" action="action_efulrental_stokmobil_info" sequence="15"/>
+</odoo>

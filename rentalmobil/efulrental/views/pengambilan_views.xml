@@ -1,0 +1,60 @@
+<odoo>
+
+    <record id="efulrental_pengambilan_tree_view" model="ir.ui.view">
+        <field name="name">Car Checkout Tree View</field>
+        <field name="model">efulrental.pengambilan</field>
+        <field name="arch" type="xml">
+            <tree>
+                    <field name="renter_name"/>
+                    <field name="renter_email"/>
+                    <field name="renter_phone"/>
+                    <field name="renter_age"/>
+                    <field name="start_dt1"/>
+                    <field name="time_slot"/>
+                    <field name="end_date1"/>
+                    <field name="car2"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="efulrental_pengambilan_form_view" model="ir.ui.view">
+        <field name="name">Car Checkout Form View</field>
+        <field name="model">efulrental.pengambilan</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="renter_name"/>
+                            <field name="renter_email"/>
+                            <field name="renter_phone"/>
+                            <field name="renter_age"/>
+                            <field name="start_dt1"/>
+                            <field name="time_slot"/>
+                            <field name="end_date1"/>
+                            <field name="car2"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+   </record>
+
+    <record id="efulrental_pengambilan_calendar_view" model="ir.ui.view">
+        <field name="name">car checkout calendar view</field>
+        <field name="model">efulrental.pengambilan</field>
+        <field name="arch" type="xml">
+            <calendar date_start="start_dt1">
+                <field name="renter_name"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="action_efulrental_pengambilan_info" model="ir.actions.act_window">
+        <field name="name">Pengambilan Mobil</field>
+        <field name="res_model">efulrental.pengambilan</field>
+        <field name="view_mode">tree,form,calendar</field>
+    </record>
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="pengambilan_menu_act" name="Pengambilan Mobil" parent="rental_menu_root" action="action_efulrental_pengambilan_info" sequence="30"/>
+</odoo>

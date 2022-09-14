@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- efulrental.brandambassador inherit tree view -->
+    <record id="efulrental_brandambassador_view_tree" model="ir.ui.view">
+        <field name="name">Brand Ambassador</field>
+        <field name="model">efulrental.brandambassador</field>
+        <field name="inherit_id" ref="efulrental_staff_tree_view"/>
+        <field name="arch" type="xml">
+            <!-- Add your xpath here -->
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="id_ambassador"/>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="jenis_kelamin"/>
+            </xpath>
+            <xpath expr="//field[@name='role']" position="replace">
+                <field name="role" invisible="1"/>
+            </xpath>                               
+        </field>
+    </record>
+
+    <!-- efulrental.brandambassador inherit form view -->
+    <record id="view_id" model="ir.ui.view">
+        <field name="name">Brand Ambassador</field>
+        <field name="model">efulrental.brandambassador</field>
+        <field name="inherit_id" ref="staff_form_view"/>
+        <field name="arch" type="xml">
+            <!-- Add your xpath here -->
+            <xpath expr="//form//sheet//group[2]" position="after">
+                <group name="id" string="ID">
+                    <field name="id_ambassador"/>
+                    <field name="jenis_kelamin"/>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='notelp']" position="attributes">
+               <attribute name="string">Nomor Handphone</attribute>
+            </xpath>
+            <xpath expr="//form//sheet//group[1]//field[@name='role']" position="replace">
+                <field name="role" invisible="1"/>
+            </xpath>
+            <xpath expr="//form//sheet//group[1]//field[@name='sim']" position="replace">
+                <field name="sim" invisible="1"/>
+            </xpath>                 
+        </field>
+    </record>
+
+    <!-- efulmart.kasir action window -->
+    <record id="efulrental_brandambassador_action" model="ir.actions.act_window">
+        <field name="name">Brand Ambassador</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">efulrental.brandambassador</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem 
+        id="efulrental_brandambassador_menu_act"
+        name="Brand Ambassador"
+        parent="mediapartner_menu_categ"
+        action="efulrental_brandambassador_action"
+        sequence="42"/>   
+</odoo>

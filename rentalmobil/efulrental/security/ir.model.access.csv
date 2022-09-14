@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_efulrental_penyewa,access.efulrental.penyewa,model_efulrental_penyewa,,1,1,1,1
+access_efulrental_staff,access.efulrental.staff,model_efulrental_staff,,1,1,1,1
+access_efulrental_stokmobil,access.efulrental.stokmobil,model_efulrental_stokmobil,,1,1,1,1
+access_efulrental.penyewabooking,access.efulrental.penyewabooking,model_efulrental_penyewabooking,,1,1,1,1
+access_efulrental_booking,access.efulrental.booking,model_efulrental_booking,,1,1,1,1
+access_efulrental_pengambilan,access.efulrental.pengambilan,model_efulrental_pengambilan,,1,1,1,1
+access_efulrental_slot,access.efulrental.slot,model_efulrental_slot,,1,1,1,1
+access_efulrental_bookingwizard,acces.efulrental.bookingwizard,model_efulrental_bookingwizard,,1,1,1,1
+access_efulrental_brandambassador,access.efulrental.brandambassador,model_efulrental_brandambassador,,1,1,1,1
